@@ -1,12 +1,18 @@
-import flask, random, os
+import flask, random, os, apiCalls
 
 app = flask.Flask(__name__)
 
 
 @app.route('/')
 def index():
-    r = random.randint(1, 100)
-    return flask.render_template("index.html", random_num=r)
+    return flask.render_template("index.html")
+
+
+@app.route('/recipes', methods=['POST'])
+def recipes():
+    response = apiCalls.api()
+    return flask.render_template("response.html", response=response['hits'][0]['recipe']['url'])
+
 
 
 app.run(
