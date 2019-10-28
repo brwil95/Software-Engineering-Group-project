@@ -16,6 +16,9 @@ If you have any questions on how to copy a base template and use it please refer
     https://startbootstrap.com/previews/modern-business/
     most of our templates are created already just need to be edited.
 
+    Note: Flask CheatSheet
+    https://s3.us-east-2.amazonaws.com/prettyprinted/flask_cheatsheet.pdf
+
 
 {% endblock %}
 
