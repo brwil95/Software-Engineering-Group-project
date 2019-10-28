@@ -18,10 +18,15 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    response = apiCalls.api()
+    images = []
+    for i in range(1, 7):
+        images.append(response['hits'][i]['recipe']['image'])
+    return render_template('index.html', image1= images[0], image2= images[1], image3 = images[2], image4= images[3], image5=images[4], image6= images[5])
 
 
-@app.route('/recipes', methods=['POST'])
+@app.route('/recipes')
+# @app.route('/recipes', methods=['POST'])
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     response = apiCalls.api()
@@ -46,12 +51,12 @@ def shuffle(q):
 
 @app.route('/quiz')
 def quiz():
-    shuffled_questioins = shuffle(questions)
+    shuffled_questions = shuffle(questions)
     for i in questions.keys():
         random.shuffle(questions[i])
         # This should be changed >>Index.html<< is our homepage?
         # should we update to >>quizQuestions.html<< ?
-    return render_template('index.html', q=shuffled_questioins, o=questions)
+    return render_template('index.html', q=shuffled_questions, o=questions)
 
 
 app.run(
