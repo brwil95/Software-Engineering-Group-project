@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-import os, copy, random
+import os, copy, random, apiCalls
 
 original_questions = {
     'is your diet':['Vegetarian','Vegan', 'Pescatarian', 'Keto', 'Paleo', 'Neither'],
@@ -27,7 +27,7 @@ def recipes():
 
 
 
-}
+
 
 #returns a deepcopy of original_questions
 questions = copy.deepcopy(original_questions)
@@ -43,10 +43,7 @@ def shuffle(q):
             i += 1
         return selected_keys
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 2d963e2dbc602193dbeab71039b495b6b3933220
 @app.route('/quiz')
 def quiz():
     shuffled_questioins = shuffle(questions)
@@ -74,7 +71,7 @@ def recipes():
 
 app.run(
     port=int(os.getenv('PORT', 8080)),
-    port=int(os.getenv('PORT', 8081)),
+    #port=int(os.getenv('PORT', 8081)),
     host=os.getenv('IP', '0.0.0.0'),
     debug=True
 )
