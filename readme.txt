@@ -1,5 +1,3 @@
-# project-3-team1Eatem
-
 Hey guys!
 
 Please be sure do the following commands:

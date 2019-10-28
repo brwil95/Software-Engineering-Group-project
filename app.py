@@ -3,36 +3,38 @@ from flask_bootstrap import Bootstrap
 import os, copy, random, apiCalls
 
 original_questions = {
-    'is your diet': ['Vegetarian', 'Vegan', 'Pescatarian', 'Keto', 'Paleo', 'Neither'],
-    'do you prefer': ['Dairy-free', 'Gluten-free', 'Soy-free', 'Wheat-free'],
-    'are you health concerns': ['Kidney friendly', 'Low potassium', 'Sugar-conscious', 'Kosher'],
-    'kind of diet would you like': ['Balanced', 'High-fiber', 'High-protein', 'Low-carb', 'Low-fat', 'Low-sodium'],
-    'food product are you allergic too': ['Tree-nut-free', 'Peanut-free', 'Mustard-free', 'Shellfish-free'],
-    'is your maximum calorie intake': ['1500', '1800', '2000', '2500'],
+    'is your diet':['Vegetarian','Vegan', 'Pescatarian', 'Keto', 'Paleo', 'Neither'],
+    'do you prefer':['Dairy-free', 'Gluten-free', 'Soy-free', 'Wheat-free'],
+    'are you health concerns':['Kidney friendly', 'Low potassium', 'Sugar-conscious', 'Kosher'],
+    'kind of diet would you like':['Balanced', 'High-fiber', 'High-protein', 'Low-carb', 'Low-fat', 'Low-sodium'],
+    'food product are you allergic too':['Tree-nut-free', 'Peanut-free', 'Mustard-free', 'Shellfish-free'],
+    'is your maximum calorie intake':['1500', '1800', '2000', '2500'],
     'nutrients is most important for your diet': ['Carbs', 'Fiber', 'Sodium', 'Iron', 'Cholesterol', 'Protein']
 }
 
 app = Flask(__name__)
 Bootstrap(app)
 
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    response = apiCalls.api()
+    images = []
+    for i in range(1, 7):
+        images.append(response['hits'][i]['recipe']['image'])
+    return render_template('index.html', image1= images[0], image2= images[1], image3 = images[2], image4= images[3], image5=images[4], image6= images[5])
 
 
-@app.route('/recipes', methods=['POST'])
+@app.route('/recipes') #   , methods=['POST'])    -- **Waiting for questionnaire response**
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     response = apiCalls.api()
     return render_template("response.html", response=response['hits'][0]['recipe']['url'])
 
 
-# returns a deepcopy of original_questions
+#returns a deepcopy of original_questions
 questions = copy.deepcopy(original_questions)
 
-
-# shuffles the questions around
+#shuffles the questions around
 def shuffle(q):
     selected_keys = []
     i = 0
@@ -43,28 +45,24 @@ def shuffle(q):
             i += 1
         return selected_keys
 
-
 @app.route('/quiz')
 def quiz():
-    shuffled_questioins = shuffle(questions)
+    shuffled_questions = shuffle(questions)
     for i in questions.keys():
         random.shuffle(questions[i])
         # This should be changed >>Index.html<< is our homepage?
         # should we update to >>quizQuestions.html<< ?
-    return render_template('index.html', q=shuffled_questioins, o=questions)
+    return render_template('quiz.html', q = shuffled_questions, o = questions)
+
+
+
 
 
 app.run(
-    port=int(os.getenv('PORT', 8080)),
+    port=int(os.getenv('PORT', 8086)),
     host=os.getenv('IP', '0.0.0.0'),
     debug=True
 )
-
-# app.run(
-#     port=int(os.getenv('PORT', 8081)),
-#     host=os.getenv('IP', '0.0.0.0'),
-#     debug=True
-# )
 
 if __name__ == '__main__':
     app.run(debug=True)
