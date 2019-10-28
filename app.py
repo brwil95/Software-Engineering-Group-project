@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-import os, copy, random
+import os, copy, random, apiCalls
 
 original_questions = {
     'is your diet':['Vegetarian','Vegan', 'Pescatarian', 'Keto', 'Paleo', 'Neither'],
@@ -19,7 +19,7 @@ Bootstrap(app)
 def index():
     return render_template('index.html')
 
-@app.route('/recipes', methods=['POST'])
+@app.route('/recipes') #   , methods=['POST'])    -- **Waiting for questionnaire response**
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     response = apiCalls.api()
@@ -47,13 +47,13 @@ def quiz():
         random.shuffle(questions[i])
         # This should be changed >>Index.html<< is our homepage?
         # should we update to >>quizQuestions.html<< ?
-    return render_template('index.html', q = shuffled_questioins, o = questions)
+    return render_template('quiz.html', q = shuffled_questioins, o = questions)
 
 
 
 
 app.run(
-    port=int(os.getenv('PORT', 8081)),
+    port=int(os.getenv('PORT', 8086)),
     host=os.getenv('IP', '0.0.0.0'),
     debug=True
 )
