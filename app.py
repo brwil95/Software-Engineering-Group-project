@@ -1,4 +1,4 @@
-import flask, random, os, apiCalls, copy, render_templates
+import flask, random, os, apiCalls, copy
 
 app = flask.Flask(__name__)
 
@@ -30,12 +30,12 @@ def shuffle(q):
         return selected_keys
 
 
-@app.route('-')
+@app.route('/quiz')
 def quiz():
     shuffled_questioins = shuffle(questions)
     for i in questions.keys():
         random.shuffle(questions[i])
-    return render_template('index.html', q = shuffled_questioins, o = questions)
+    return flask.render_template('index.html', q = shuffled_questioins, o = questions)
 
 
 
