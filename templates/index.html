@@ -1,22 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<body>
-    <h1>Welcome to the Questionnaire</h1>
-    <form action ='/quiz' method = 'POST'>
-        <ol>
-            {% for i in q %}
-                <li>What<u>{{i}}</u> ?</li>
-                {% for j in o[i] %}
-                    <input type="radio" value = '{{j}}' name = '{{i}}' />
-                {% endfor %}
-            {% endfor %}
-        </ol>
-        <input type = 'submit' value="submit" />
-    </form>
-</body>
-
-
 <head>
 
   <meta charset="utf-8">
