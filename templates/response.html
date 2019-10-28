@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-</head>
- <body>
-      <h1>Hello World!</h1>
+{% extends "bootstrap/base.html" %}
+{% block title %} RESPONSE NEEDS UPDATE? {% endblock %}
+
 <!--      Todo add the list of data from the api response-->
+{% block content %}
+<h1> Hello World </h1>
       <a href = {{ response }}> Link here </a>
-  </body>
-</html>
+{% endblock %}
