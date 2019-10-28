@@ -1,19 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
-import flask, random, os, apiCalls
-
-app = flask.Flask(__name__)
-
-
-@app.route('/')
-def index():
-    return flask.render_template("index.html")
-
-
-@app.route('/recipes', methods=['POST'])
-def recipes():
-    response = apiCalls.api()
-    return flask.render_template("response.html", response=response['hits'][0]['recipe']['url'])
-=========
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 import os, copy, random, apiCalls
