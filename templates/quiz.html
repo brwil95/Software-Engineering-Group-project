@@ -6,11 +6,24 @@
 {% block content %}
 <form method="POST" action="/quiz">
     <h1>{{ question1 }}</h1>
-        <input name="value">
+        <input type="checkbox" name="q1answer" value="Keto"/>Keto
+        <input type="checkbox" name="q1answer" value="Paleo"/>Paleo
+        <input type="checkbox" name="q1answer" value="Pescatarian"/>Pescatarian
+        <input type="checkbox" name="q1answer" value="Vegan"/>Vegan
+        <input type="checkbox" name="q1answer" value="Vegetarian"/>Vegetarian
     <h1>{{ question2 }}</h1>
-        <input name="value">
+        <input type="checkbox" name="q2answer" value="Gluten-free"/>Gluten-free
+        <input type="checkbox" name="q2answer" value="Dairy-free"/>Dairy-free
+        <input type="checkbox" name="q2answer" value="Peanut-free"/>Peanut-free
+        <input type="checkbox" name="q2answer" value="Soy-free"/>Soy-free
+        <input type="checkbox" name="q2answer" value="Wheat-free"/>Wheat-free
     <h1>{{ question3 }}</h1>
-        <input name="value">
+        <input type="checkbox" name="q3answer" value="Balanced"/>Balanced
+        <input type="checkbox" name="q3answer" value="High-fiber"/>High-fiber
+        <input type="checkbox" name="q3answer" value="High-protein"/>High-protein
+        <input type="checkbox" name="q3answer" value="Low-Carb"/>Low-Carb
+        <input type="checkbox" name="q3answer" value="Low-fat"/>Low-fat
+        <input type="checkbox" name="q3answer" value="Low-sodium"/>Low-sodium
     <h1>{{ question4 }} </h1>
         <input name="value">
             <br>

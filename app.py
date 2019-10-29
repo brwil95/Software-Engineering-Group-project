@@ -45,8 +45,8 @@ def recipes():
 @app.route('/quiz')
 def questions():
     q1 = "Are you on a diet? If so which one"
-    q2 = "Would you like recipes that are Gluten-free?"
-    q3 = "Are you allergic to any food?"
+    q2 = "Would you like recipes to be free of anything?"
+    q3 = "How would you like your diet?"
     q4 = "What is your maximum calorie intake?"
     return flask.render_template(
         "quiz.html",
