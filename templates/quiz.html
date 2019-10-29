@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "bootstrap/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-    <h1>Welcome to the Questionnaire</h1>
-    <form action ='/quiz' method = 'POST'>
-        <ol>
-            {% for i in q %}
-                <li>What<u>{{i}}</u> ?</li>
-                {% for j in o[i] %}
-                    <input type="radio" value = '{{j}}' name = '{{i}}' />
-                {% endfor %}
-            {% endfor %}
-        </ol>
-        <input type = 'submit' value="submit" />
-    </form>
-</body>
-</html>
+{% block title %} Question for the Eatem website {% endblock %}
+
+
+{% block content %}
+<form method="POST" action="/quiz">
+    <h1>{{ question1 }}</h1>
+        <input name="value">
+    <h1>{{ question2 }}</h1>
+        <input name="value">
+    <h1>{{ question3 }}</h1>
+        <input name="value">
+    <h1>{{ question4 }} </h1>
+        <input name="value">
+            <br>
+            <br>
+        <input type="submit">
+</form>
+{% endblock %}
