@@ -38,19 +38,25 @@ def recipes():
     return render_template("response.html", response=response['hits'][0]['recipe']['url'])
 
 
+#quiz questions
 @app.route('/quiz')
 def questions():
     q1 = "Are you on a diet? If so which one"
     q2 = "Would you like recipes to be free of anything?"
     q3 = "How would you like your diet?"
-    q4 = "What is your maximum calorie intake?"
+    q4 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)"
+    q5 = "What is your maximum calorie count?"
+
     return flask.render_template(
         "quiz.html",
         question1=q1,
         question2=q2,
         question3=q3,
-        question4=q4
+        question4=q4,
+        question5=q5
     )
+
+#stores users answers
 @app.route('/answers', methods=['POST'])
 def user_answers():
     value = requests.questions['value']
