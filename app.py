@@ -1,7 +1,8 @@
 import flask
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-import os, request, apiCalls
+import os, requests, apiCalls
+
 
 
 app = Flask(__name__)
@@ -10,12 +11,6 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    response = apiCalls.api()
-    images = []
-    for i in range(1, 7):
-        images.append(response['hits'][i]['recipe']['image'])
-    return render_template('index.html', image1=images[0], image2=images[1], image3=images[2], image4=images[3],
-                           image5=images[4], image6=images[5])
     # todo figure out how to do one api call for these images
     # breakfast = apiCalls.api()
     # lunch = apiCalls.lunch()
@@ -35,10 +30,11 @@ def index():
 
 
 
-@app.route('/recipes')  # , methods=['POST'])    -- **Waiting for questionnaire response**
+@app.route('/recipes', methods=['POST'])  # , methods=['POST'])    -- **Waiting for questionnaire response**
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     response = apiCalls.api()
+    print(flask.request.form)
     return render_template("response.html", response=response['hits'][0]['recipe']['url'])
 
 
@@ -57,7 +53,7 @@ def questions():
     )
 @app.route('/answers', methods=['POST'])
 def user_answers():
-    value = request.questions['value']
+    value = requests.questions['value']
     return value
 
 
