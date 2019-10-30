@@ -15,14 +15,6 @@
     </select>
     <h1>{{ question2 }}</h1>
         <select>
-            <option value="health">Gluten-free</option>
-            <option value="health">Dairy-free</option>
-            <option value="health">Peanut-free</option>
-            <option value="health">Soy-free</option>
-            <option value="health">Wheat-free</option>
-        </select>
-    <h1>{{ question3 }}</h1>
-        <select>
             <option value="diet">Balanced</option>
             <option value="diet">High-fiber</option>
             <option value="diet">High_protein</option>
@@ -30,10 +22,15 @@
             <option value="diet">Low-fat</option>
             <option value="diet">Low-sodium</option>
         </select>
+    <h1>{{ question3 }} </h1>
+        <input name="food_type">
     <h1>{{ question4 }} </h1>
-        <input name="q">
-    <h1>{{ question5 }} </h1>
-        <input name="calories">
+        <select>
+            <option value="calories">1300</option>
+            <option value="calories">1500</option>
+            <option value="calories">2000</option>
+            <option value="calories">2500</option>
+        </select>
             <br>
             <br>
     <input type="submit" value="submit" />

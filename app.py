@@ -3,8 +3,6 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 import os, requests, apiCalls
 
-
-
 app = Flask(__name__)
 Bootstrap(app)
 
@@ -21,31 +19,31 @@ def index():
     #     images.append(lunch['hits'][i]['recipe']['image'])
     #     images.append(dinner['hits'][i]['recipe']['image'])
     # Automatically set these images from the api, we cannot do too many api calls at once so I had to manually enter these images)
-    return render_template('index.html', image1= "https://www.edamam.com/web-img/e26/e267487d5cd69a038c3284931b4a3c1b.jpg",
-                           image2= "https://www.edamam.com/web-img/ea3/ea3d4f71561834c9ba83a4f94855c1a0.jpg",
-                           image3 = "https://www.edamam.com/web-img/b41/b4132f24268a9faeb8eb84bc164f39c1.jpg",
-                           image4= "https://www.edamam.com/web-img/54d/54d01bbcb5537f018e723982af112c57.jpg",
+    return render_template('index.html',
+                           image1="https://www.edamam.com/web-img/e26/e267487d5cd69a038c3284931b4a3c1b.jpg",
+                           image2="https://www.edamam.com/web-img/ea3/ea3d4f71561834c9ba83a4f94855c1a0.jpg",
+                           image3="https://www.edamam.com/web-img/b41/b4132f24268a9faeb8eb84bc164f39c1.jpg",
+                           image4="https://www.edamam.com/web-img/54d/54d01bbcb5537f018e723982af112c57.jpg",
                            image5="https://www.edamam.com/web-img/81f/81f405106c1d3a69232c98fba2f05565.jpg",
-                           image6= "https://www.edamam.com/web-img/fb0/fb08a81382ac836ec709fee50d0f5123.jpeg")
+                           image6="https://www.edamam.com/web-img/fb0/fb08a81382ac836ec709fee50d0f5123.jpeg")
 
 
-
-@app.route('/recipes', methods=['POST'])  # , methods=['POST'])    -- **Waiting for questionnaire response**
+@app.route('/recipes', methods=['POST'])
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
-    response = apiCalls.api()
-    print(flask.request.form)
+    user_response = flask.request.form
+    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['health'], user_response['diet'], user_response['calories'])
+    print(user_response['q1answer'])
     return render_template("response.html", response=response['hits'][0]['recipe']['url'])
 
 
-#quiz questions
+# quiz questions
 @app.route('/quiz')
 def questions():
     q1 = "Are you on a diet? If so which one"#html health_type
-    q2 = "Would you like recipes to be free of anything?"#html health
-    q3 = "How would you like your diet?"#html diet
-    q4 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)" #html q
-    q5 = "What is your maximum calorie count?"#html calories
+    q2 = "How would you like your diet?"#html diet
+    q3 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)" #html q
+    q4 = "What is your maximum calorie count?"#html calories
 
     return flask.render_template(
         "quiz.html",
@@ -53,17 +51,14 @@ def questions():
         question2=q2,
         question3=q3,
         question4=q4,
-        question5=q5
     )
 
-#stores users answers
+
+# stores users answers
 @app.route('/answers', methods=['POST'])
 def user_answers():
     value = requests.questions['value']
     return value
-
-
-
 
 
 app.run(
