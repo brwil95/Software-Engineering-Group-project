@@ -1,7 +1,7 @@
 import flask
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-import os, requests, apiCalls
+import os, requests, apiCalls, json
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -32,9 +32,15 @@ def index():
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     user_response = flask.request.form
-    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['health'], user_response['diet'], user_response['calories'])
-    print(user_response['q1answer'])
-    return render_template("response.html", response=response['hits'][0]['recipe']['url'])
+    print(user_response)
+    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['health'], user_response['diet'])#, user_response['calories'])
+    print(response['hits'][1]['recipe']['label'])
+    dictionary_items = {}
+    for i in range(1, 5):
+        if response['hits'][i]['recipe']['url'] not in dictionary_items:
+            dictionary_items[response['hits'][i]['recipe']['label']] = response['hits'][i]['recipe']['url']
+    print(dictionary_items)
+    return render_template("response.html", response_list=dictionary_items)
 
 
 # quiz questions

@@ -3,6 +3,16 @@
 
 <!--      Todo add the list of data from the api response-->
 {% block content %}
-<h1> Hello World </h1>
-      <a href = {{ response }}> Link here </a>
+<h1> List of Meals </h1>
+      <body>
+      {% for key, value in response_list.items() %}
+
+        <li>{{ key }}</li>
+        <a href = {{ value }} > Link here </a>
+
+      {% endfor %}
+
+      <a href={{ response }}> Link here</a>
+      </body>
+
 {% endblock %}
