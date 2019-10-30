@@ -41,11 +41,11 @@ def recipes():
 #quiz questions
 @app.route('/quiz')
 def questions():
-    q1 = "Are you on a diet? If so which one"
-    q2 = "Would you like recipes to be free of anything?"
-    q3 = "How would you like your diet?"
-    q4 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)"
-    q5 = "What is your maximum calorie count?"
+    q1 = "Are you on a diet? If so which one"#html health_type
+    q2 = "Would you like recipes to be free of anything?"#html health
+    q3 = "How would you like your diet?"#html diet
+    q4 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)" #html q
+    q5 = "What is your maximum calorie count?"#html calories
 
     return flask.render_template(
         "quiz.html",
