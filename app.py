@@ -33,8 +33,8 @@ def index():
 def recipes():
     user_response = flask.request.form
     print(user_response)
-    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['health'], user_response['diet'])#, user_response['calories'])
-    print(response['hits'][1]['recipe']['label'])
+    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['diet'], user_response['calories'])#, user_response['calories'])
+    print(user_response['health_type'])
     dictionary_items = {}
     for i in range(1, 5):
         if response['hits'][i]['recipe']['url'] not in dictionary_items:
@@ -46,11 +46,10 @@ def recipes():
 # quiz questions
 @app.route('/quiz')
 def questions():
-    q1 = "Are you on a diet? If so which one"
-    q2 = "Would you like recipes to be free of anything?"
-    q3 = "How would you like your diet?"
-    q4 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)"
-    q5 = "What is your maximum calorie count?"
+    q1 = "Are you on a diet? If so which one"#html health_type
+    q2 = "How would you like your diet?"#html diet
+    q3 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)" #html q
+    q4 = "What is your maximum calorie count?"#html calories
 
     return flask.render_template(
         "quiz.html",
@@ -58,7 +57,6 @@ def questions():
         question2=q2,
         question3=q3,
         question4=q4,
-        question5=q5
     )
 
 

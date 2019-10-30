@@ -6,28 +6,33 @@
 {% block content %}
 <form method="POST" action="/recipes">
     <h1>{{ question1 }}</h1>
-        <input type="checkbox" name="health_type" value="Keto"/>Keto
-        <input type="checkbox" name="health_type" value="Paleo"/>Paleo
-        <input type="checkbox" name="health_type" value="Pescatarian"/>Pescatarian
-        <input type="checkbox" name="health_type" value="Vegan"/>Vegan
-        <input type="checkbox" name="health_type" value="Vegetarian"/>Vegetarian
+        <select>
+        <option value="health_type">Keto</option>
+        <option value="health_type">Paleo</option>
+        <option value="health_type">Pescatarian</option>
+        <option value="health_type">Vegan</option>
+        <option value="health_type">Vegetarian</option>
+    </select>
     <h1>{{ question2 }}</h1>
-        <input type="checkbox" name="health" value="Gluten-free"/>Gluten-free
-        <input type="checkbox" name="health" value="Dairy-free"/>Dairy-free
-        <input type="checkbox" name="health" value="Peanut-free"/>Peanut-free
-        <input type="checkbox" name="health" value="Soy-free"/>Soy-free
-        <input type="checkbox" name="health" value="Wheat-free"/>Wheat-free
-    <h1>{{ question3 }}</h1>
-        <input type="checkbox" name="diet" value="Balanced"/>Balanced
-        <input type="checkbox" name="diet" value="High-fiber"/>High-fiber
-        <input type="checkbox" name="diet" value="High-protein"/>High-protein
-        <input type="checkbox" name="diet" value="Low-Carb"/>Low-Carb
-        <input type="checkbox" name="diet" value="Low-fat"/>Low-fat
-        <input type="checkbox" name="diet" value="Low-sodium"/>Low-sodium
-    <h1>{{ question4 }} </h1>
+        <select>
+            <option value="diet">Balanced</option>
+            <option value="diet">High-fiber</option>
+            <option value="diet">High_protein</option>
+            <option value="diet">Low-carb</option>
+            <option value="diet">Low-fat</option>
+            <option value="diet">Low-sodium</option>
+        </select>
+    <h1>{{ question3 }} </h1>
         <input name="food_type">
-<!--    <h1>{{ question5 }} </h1>-->
-<!--        <input name="calories">-->
+
+    <h1>{{ question4 }} </h1>
+        <select>
+            <option value="calories">1300</option>
+            <option value="calories">1500</option>
+            <option value="calories">2000</option>
+            <option value="calories">2500</option>
+        </select>
+
             <br>
             <br>
     <input type="submit" value="submit" />
