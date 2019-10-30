@@ -7,13 +7,21 @@
 <form method="POST" action="/recipes">
     <h1>{{ question1 }}</h1>
         <select>
-        <option value="health_type">Keto</option>
-        <option value="health_type">Paleo</option>
-        <option value="health_type">Pescatarian</option>
-        <option value="health_type">Vegan</option>
-        <option value="health_type">Vegetarian</option>
-    </select>
+            <option value="health_type">Keto</option>
+            <option value="health_type">Paleo</option>
+            <option value="health_type">Pescatarian</option>
+            <option value="health_type">Vegan</option>
+            <option value="health_type">Vegetarian</option>
+        </select>
     <h1>{{ question2 }}</h1>
+        <select>
+            <option value="healt">Gluten-free</option>
+            <option value="healt">Dairy-free</option>
+            <option value="healt">Peanut-free</option>
+            <option value="healt">Soy-free</option>
+            <option value="healt">Wheat-free</option>
+        </select>
+    <h1>{{ question3 }}</h1>
         <select>
             <option value="diet">Balanced</option>
             <option value="diet">High-fiber</option>
@@ -22,17 +30,15 @@
             <option value="diet">Low-fat</option>
             <option value="diet">Low-sodium</option>
         </select>
-    <h1>{{ question3 }} </h1>
-        <input name="food_type">
-
-    <h1>{{ question4 }} </h1>
+    <h1> {{ question4 }} </h1>
         <select>
             <option value="calories">1300</option>
             <option value="calories">1500</option>
             <option value="calories">2000</option>
             <option value="calories">2500</option>
         </select>
-
+    <h1> {{ question5 }} </h1>
+        <input name="food_type">
             <br>
             <br>
     <input type="submit" value="submit" />
