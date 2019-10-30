@@ -2,9 +2,9 @@ import requests
 import json
 
 
-# todo will eventually take in data
-def api(q, health_type, diet, calories):
-    url = 'https://api.edamam.com/search?q=' + q.lower() +'&health_type=' + health_type.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
+
+def api(q, health_type, health, diet, calories):
+    url = 'https://api.edamam.com/search?q=' + q.lower() +'&health_type=' + health_type.lower() +'&healt=' + health.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
           '=4a892acba31294ff42ec114868b7ffce '
     print(url)
     response = requests.get(url)

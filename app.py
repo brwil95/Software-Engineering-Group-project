@@ -33,8 +33,7 @@ def index():
 def recipes():
     user_response = flask.request.form
     print(user_response)
-    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['diet'], user_response['calories'])#, user_response['calories'])
-    print(user_response['health_type'])
+    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'], user_response['diet'], user_response['calories'])#, user_response['calories'])
     dictionary_items = {}
     for i in range(1, 5):
         if response['hits'][i]['recipe']['url'] not in dictionary_items:
