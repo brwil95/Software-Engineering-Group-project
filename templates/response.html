@@ -6,13 +6,16 @@
 <h1> List of Meals </h1>
       <body>
       {% for key, value in response_list.items() %}
-
-        <li>{{ key }}</li>
-        <a href = {{ value }} > Link here </a>
+      <form method="POST" action="/recipe/details">
+          <h3> <a href="recipe/details"> {{ key }}</a> </h3>
+      </form>
+        <li>
+            <img src={{ value.1 }} width="200" height="200">
+            <a href = {{ value.0 }} > visit website for {{ key }} </a>
+        </li>
 
       {% endfor %}
 
-      <a href={{ response }}> Link here</a>
       </body>
 
 {% endblock %}

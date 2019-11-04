@@ -32,14 +32,21 @@ def index():
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     user_response = flask.request.form
-    print(user_response)
     response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'], user_response['diet'], user_response['calories'])#, user_response['calories'])
     dictionary_items = {}
-    for i in range(1, 5):
+    images = []
+    for i in range(1, 10):
         if response['hits'][i]['recipe']['url'] not in dictionary_items:
-            dictionary_items[response['hits'][i]['recipe']['label']] = response['hits'][i]['recipe']['url']
-    print(dictionary_items)
-    return render_template("response.html", response_list=dictionary_items)
+            dictionary_items[response['hits'][i]['recipe']['label']] = (response['hits'][i]['recipe']['url'], response['hits'][i]['recipe']['image'])
+            images.append(response['hits'][i]['recipe']['image'])
+    return render_template("response.html", response_list=dictionary_items, recipe_image=images)
+
+
+@app.route('/recipe/details')
+def detail_view():
+    response = apiCalls.api("Cookies-and-Cream Ice Cream", "vegetarian", "dairy-free", "balanced", "2000")
+    response_values = response['hits'][0]['recipe']
+    return render_template("recipe-details.html", name=response_values['label'], image=response_values['image'], url=response_values['url'], diet=response_values['dietLabels'], health=response_values['healthLabels'], ingredients=response_values['ingredientLines'])
 
 
 # quiz questions
