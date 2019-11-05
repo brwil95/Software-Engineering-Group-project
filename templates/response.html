@@ -5,9 +5,11 @@
 {% block content %}
 <h1> List of Meals </h1>
       <body>
+      {% if results %}
       {% for key, value in response_list.items() %}
       <form method="POST" action="/recipe/details">
-          <h3> <a href="recipe/details"> {{ key }}</a> </h3>
+          <h3> <a href="recipe/details" type="button" name="recipe" value={{key}}> {{ key }}</a> </h3>
+
       </form>
         <li>
             <img src={{ value.1 }} width="200" height="200">
@@ -16,6 +18,15 @@
 
       {% endfor %}
 
+      {% else %}
+      <ul class=flashes>
+          <h2> Information entered in questionnaire can not find recipes, please try again </h2>
+
+          <form>
+            <input type="button" value="Back to questionnaire" onclick="history.back()">
+          </form>
+      </ul>
+      {% endif %}
       </body>
 
 {% endblock %}
