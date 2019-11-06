@@ -11,22 +11,35 @@ Bootstrap(app)
 @app.route('/')
 def index():
     # todo figure out how to do one api call for these images
-    # breakfast = apiCalls.api()
-    # lunch = apiCalls.lunch()
-    # dinner = apiCalls.dinner()
-    # images = []
-    # for i in range(1, 3):
-    #     images.append(breakfast['hits'][i]['recipe']['image'])
-    #     images.append(lunch['hits'][i]['recipe']['image'])
-    #     images.append(dinner['hits'][i]['recipe']['image'])
+    response = apiCalls.api('breakfast', 'vegetarian', 'dairy-free', 'balanced', '2000')
+    urls = []
+    labels = []
+    images = []
+    for i in range(1, 7):
+        labels.append(response['hits'][i]['recipe']['label'])
+        urls.append(response['hits'][i]['recipe']['url'])
+        images.append(response['hits'][i]['recipe']['image'])
     # Automatically set these images from the api, we cannot do too many api calls at once so I had to manually enter these images)
     return render_template('index.html',
-                           image1="https://www.edamam.com/web-img/e26/e267487d5cd69a038c3284931b4a3c1b.jpg",
-                           image2="https://www.edamam.com/web-img/ea3/ea3d4f71561834c9ba83a4f94855c1a0.jpg",
-                           image3="https://www.edamam.com/web-img/b41/b4132f24268a9faeb8eb84bc164f39c1.jpg",
-                           image4="https://www.edamam.com/web-img/54d/54d01bbcb5537f018e723982af112c57.jpg",
-                           image5="https://www.edamam.com/web-img/81f/81f405106c1d3a69232c98fba2f05565.jpg",
-                           image6="https://www.edamam.com/web-img/fb0/fb08a81382ac836ec709fee50d0f5123.jpeg")
+                           image1=images[0],
+                           image2=images[1],
+                           image3=images[2],
+                           image4=images[3],
+                           image5=images[4],
+                           image6=images[5],
+                           url1=urls[0],
+                           url2=urls[1],
+                           url3=urls[2],
+                           url4=urls[3],
+                           url5=urls[4],
+                           url6=urls[5],
+                           label1=labels[0],
+                           label2=labels[1],
+                           label3=labels[2],
+                           label4=labels[3],
+                           label5=labels[4],
+                           label6=labels[5],
+                           )
 
 
 @app.route('/recipes', methods=['POST'])
@@ -47,14 +60,14 @@ def recipes():
 
 #todo make path for both login and blog
 
-# @app.route('/login')
-# def login():
-#     return render_template('login.html')
-#
-#
-# @app.route('/blog')
-# def blog():
-#     return render_template('blog-post.html')
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/blog')
+def blog():
+    return render_template('blog-post.html')
 
 
 @app.route('/recipe/details', methods=['POST'])
