@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.secret_key = "b'_5#y2LF4Q8znxec]/'"
 Bootstrap(app)
 
+stored = apiCalls.Queue()
 
 @app.route('/')
 def index():
@@ -46,6 +47,7 @@ def index():
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
     user_response = flask.request.form
+    stored.add_stored(user_response)
     response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'], user_response['diet'], user_response['calories'])#, user_response['calories'])
     dictionary_items = {}
     images = []
@@ -56,7 +58,7 @@ def recipes():
         if response['hits'][i]['recipe']['url'] not in dictionary_items:
             dictionary_items[response['hits'][i]['recipe']['label']] = (response['hits'][i]['recipe']['url'], response['hits'][i]['recipe']['image'])
             images.append(response['hits'][i]['recipe']['image'])
-    return render_template("response.html", results=True, response_list=dictionary_items, recipe_image=images)
+    return render_template("response.html", results=True, response_list=dictionary_items, recipe_image=images, stored=user_response)
 
 #todo make path for both login and blog
 
@@ -69,13 +71,20 @@ def login():
 def blog():
     return render_template('blog-post.html')
 
+# def stored_recipes(response):
+#     print(response)
+#     stored = response
+#     return response
 
 @app.route('/recipe/details', methods=['POST'])
 def detail_view():
     user_choice = flask.request.form
-    print(user_choice)
-    response = apiCalls.api("Cookies-and-Cream Ice Cream", "vegetarian", "dairy-free", "balanced", "2000")
-    response_values = response['hits'][0]['recipe']
+    previous_data = stored.remove_stored()
+    response = apiCalls.specific_recipe(previous_data['food_type'], previous_data['health_type'], previous_data['healt'], previous_data['diet'], previous_data['calories'], user_choice['recipe'])
+    for item in range(len(response['hits'])):
+        if response['hits'][item]['recipe']['label'] == user_choice['recipe']:
+            response_values = response['hits'][item]['recipe']
+            break
     return render_template("recipe-details.html", name=response_values['label'], image=response_values['image'], url=response_values['url'], diet=response_values['dietLabels'], health=response_values['healthLabels'], ingredients=response_values['ingredientLines'])
 
 
