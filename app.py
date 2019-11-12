@@ -46,6 +46,9 @@ def index():
 @app.route('/recipes', methods=['POST'])
 # The API_Calls are shooting me with an error. Please advise on the modules that need to be installed to make it work properly.
 def recipes():
+    if stored.not_empty():
+        stored.remove_stored()
+
     user_response = flask.request.form
     stored.add_stored(user_response)
     response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'], user_response['diet'], user_response['calories'])#, user_response['calories'])
@@ -79,7 +82,7 @@ def blog():
 @app.route('/recipe/details', methods=['POST'])
 def detail_view():
     user_choice = flask.request.form
-    previous_data = stored.remove_stored()
+    previous_data = stored.get_stored()
     response = apiCalls.specific_recipe(previous_data['food_type'], previous_data['health_type'], previous_data['healt'], previous_data['diet'], previous_data['calories'], user_choice['recipe'])
     for item in range(len(response['hits'])):
         if response['hits'][item]['recipe']['label'] == user_choice['recipe']:

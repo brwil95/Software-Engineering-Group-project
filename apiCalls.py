@@ -12,6 +12,14 @@ class Queue:
     def remove_stored(self):
         return self.queue.pop()
 
+    def get_stored(self):
+        return self.queue[0]
+
+    def not_empty(self):
+        if len(self.queue) == 0:
+            return False
+        else:
+            return True
 
 def api(q, health_type, health, diet, calories):
     url = 'https://api.edamam.com/search?q=' + q.lower() +'&health_type=' + health_type.lower() +'&healt=' + health.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
