@@ -22,18 +22,38 @@ class Queue:
             return True
 
 def api(q, health_type, health, diet, calories):
-    url = 'https://api.edamam.com/search?q=' + q.lower() +'&health_type=' + health_type.lower() +'&healt=' + health.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
-          '=4a892acba31294ff42ec114868b7ffce '
-    if(health == ''):
-        url += '&health_type=' + health_type.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
-                '=4a892acba31294ff42ec114868b7ffce '
-
+    values = {'health_type': health_type,
+              'healt': health,
+              'diet': diet,
+              'calories': calories}
+    url = 'https://api.edamam.com/search?q=' + q.lower()
+#     if(health == ''):
+#         url += '&health_type=' + health_type.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
+#                 '=4a892acba31294ff42ec114868b7ffce '
+    for item in values:
+        if values[item] != '':
+            if item == 'calories':
+                url += '&' + item + '=0-' + values[item]
+            else:
+                url += '&'+ item + '=' + values[item].lower()
+    url += '&app_id=5ef19f8a&app_key=4a892acba31294ff42ec114868b7ffce '
     response = requests.get(url)
     return response.json()
 
 def specific_recipe(q, health_type, health, diet, calories, recipe):
-    url = 'https://api.edamam.com/search?q=' + q.lower() + '&label=' + recipe + '&health_type=' + health_type.lower() +'&healt=' + health.lower() + '&diet=' + diet.lower() + '&calories=0-' + calories + '&app_id=5ef19f8a&app_key' \
-          '=4a892acba31294ff42ec114868b7ffce '
+    values = {'health_type': health_type,
+              'healt': health,
+              'diet': diet,
+              'calories': calories}
+
+    url = 'https://api.edamam.com/search?q=' + q.lower() + '&label=' + recipe.lower()
+    for item in values:
+        if values[item] != '':
+            if item == 'calories':
+                url += '&' + item + '=0-' + values[item]
+            else:
+                url += '&'+ item + '=' + values[item].lower()
+    url += '&app_id=5ef19f8a&app_key=4a892acba31294ff42ec114868b7ffce '
 
     response = requests.get(url)
     return response.json()
