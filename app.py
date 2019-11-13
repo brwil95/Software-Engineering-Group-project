@@ -72,8 +72,8 @@ def login():
 
 
 @app.route('/blog')
-def blog():
-    return render_template('blog-post.html')
+def team():
+    return render_template('team.html')
 
 # def stored_recipes(response):
 #     print(response)
