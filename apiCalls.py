@@ -15,11 +15,22 @@ class Queue:
     def get_stored(self):
         return self.queue[0]
 
+    def get_value(self):
+        return self.queue[0]
+
+    def empty_queue(self):
+        for item in self.queue:
+            self.queue.pop()
+        return
+
     def not_empty(self):
         if len(self.queue) == 0:
             return False
         else:
             return True
+
+    def queue_length(self):
+        return len(self.queue)
 
 def api(q, health_type, health, diet, calories):
     values = {'health_type': health_type,

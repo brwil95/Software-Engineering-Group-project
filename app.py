@@ -1,4 +1,5 @@
 import flask
+import time
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 import os, requests, apiCalls, json
@@ -8,6 +9,8 @@ app.secret_key = "b'_5#y2LF4Q8znxec]/'"
 Bootstrap(app)
 
 stored = apiCalls.Queue()
+holding_values = apiCalls.Queue()
+
 
 @app.route('/')
 def index():
@@ -52,19 +55,33 @@ def recipes():
     user_response = flask.request.form
     print(user_response)
     stored.add_stored(user_response)
-    response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'], user_response['diet'], user_response['calories'])#, user_response['calories'])
+
+    if holding_values.queue_length() == 0:
+        response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'],
+                                user_response['diet'], user_response['calories'])  # , user_response['calories'])
+        holding_values.add_stored(response)
     dictionary_items = {}
     images = []
+    response = holding_values.get_value()
+
     if response['count'] == 0:
         flask.flash("No results to display, try different entry")
         return render_template("response.html", results=False)
+    # try:
     for i in range(1, 10):
         if response['hits'][i]['recipe']['url'] not in dictionary_items:
-            dictionary_items[response['hits'][i]['recipe']['label']] = (response['hits'][i]['recipe']['url'], response['hits'][i]['recipe']['image'])
+            dictionary_items[response['hits'][i]['recipe']['label']] = (
+                response['hits'][i]['recipe']['url'], response['hits'][i]['recipe']['image'])
             images.append(response['hits'][i]['recipe']['image'])
-    return render_template("response.html", results=True, response_list=dictionary_items, recipe_image=images, stored=user_response)
+    print(dictionary_items)
+    print(images)
+    return render_template("response.html", results=True, response_list=dictionary_items, recipe_image=images,
+                           stored=user_response)
+    # except KeyError:
+    #     return render_template("response.html", "<h1> Be patient for response </h1>")
 
-#todo make path for both login and blog
+
+# todo make path for both login and blog
 
 @app.route('/login')
 def login():
@@ -75,6 +92,7 @@ def login():
 def blog():
     return render_template('blog-post.html')
 
+
 # def stored_recipes(response):
 #     print(response)
 #     stored = response
@@ -84,23 +102,31 @@ def blog():
 def detail_view():
     user_choice = flask.request.form
     previous_data = stored.get_stored()
-    response = apiCalls.specific_recipe(previous_data['food_type'], previous_data['health_type'], previous_data['healt'], previous_data['diet'], previous_data['calories'], user_choice['recipe'])
-    for item in range(len(response['hits'])):
-        if response['hits'][item]['recipe']['label'] == user_choice['recipe']:
-            response_values = response['hits'][item]['recipe']
-            break
-    return render_template("recipe-details.html", name=response_values['label'], image=response_values['image'], url=response_values['url'], diet=response_values['dietLabels'], health=response_values['healthLabels'], ingredients=response_values['ingredientLines'])
 
+    response = apiCalls.specific_recipe(previous_data['food_type'], previous_data['health_type'],
+                                        previous_data['healt'], previous_data['diet'], previous_data['calories'],
+                                        user_choice['recipe'])
+    try:
+        for item in range(len(response['hits'])):
+            if response['hits'][item]['recipe']['label'] == user_choice['recipe']:
+                response_values = response['hits'][item]['recipe']
+                break
+        return render_template("recipe-details.html", name=response_values['label'], image=response_values['image'],
+                                url=response_values['url'], diet=response_values['dietLabels'],
+                                health=response_values['healthLabels'], ingredients=response_values['ingredientLines'])
+    except KeyError:
+        return render_template("recipe-details.html", "<h1> Reload in a moment</h1>")
 
 # quiz questions
 @app.route('/quiz')
 def questions():
-    q1 = "Are you on a diet? If so which one"#html health_type
-    q2 = "Would you like recipes to be free of anything?"#html healt
-    q3 = "How would you like your diet?"#html diet
-    q4 = "What is your maximum calorie count?"#html calories
-    q5 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)" #html q
-
+    if holding_values.queue_length() > 0:
+        holding_values.empty_queue()
+    q1 = "Are you on a diet? If so which one"  # html health_type
+    q2 = "Would you like recipes to be free of anything?"  # html healt
+    q3 = "How would you like your diet?"  # html diet
+    q4 = "What is your maximum calorie count?"  # html calories
+    q5 = "What type of food would you like?(chicken, chocolate chip cookies, bacon, etc.)"  # html q
 
     return flask.render_template(
         "quiz.html",
