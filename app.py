@@ -50,6 +50,7 @@ def recipes():
         stored.remove_stored()
 
     user_response = flask.request.form
+    print(user_response)
     stored.add_stored(user_response)
     response = apiCalls.api(user_response['food_type'], user_response['health_type'], user_response['healt'], user_response['diet'], user_response['calories'])#, user_response['calories'])
     dictionary_items = {}
