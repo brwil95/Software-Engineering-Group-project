@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Socket } from './Socket';
 import { GoogleLogin } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 
 
 export class Button extends React.Component{
@@ -24,7 +25,14 @@ export class Button extends React.Component{
         if(user.isSignedIn()){
             console.log("google token" + user.getAuthResponse().id_token);
         }
+
+
+
     }
+
+
+
+}
 
 
 

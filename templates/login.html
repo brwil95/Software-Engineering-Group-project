@@ -24,6 +24,11 @@
 
   <body>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="https://www.google.com/accounts/Logout"
+    onclick="myIFrame.location='https://www.google.com/accounts/Logout';StartPollingForCompletion();return false;">
+   log out</a>
+<!--<iframe id="myIFrame"></iframe>-->
+
     <!--<form>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
