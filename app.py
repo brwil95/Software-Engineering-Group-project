@@ -144,6 +144,10 @@ def user_answers():
     value = requests.questions['value']
     return value
 
+# todo making the home screen recipes clickable
+@app.route('/starter-recipes')
+def staters():
+    stored.add_stored()
 
 app.run(
     port=int(os.getenv('PORT', 8086)),
