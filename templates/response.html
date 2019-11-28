@@ -3,10 +3,14 @@
 
 <!--      Todo add the list of data from the api response-->
 {% block content %}
-<h1 xmlns="http://www.w3.org/1999/html"> List of Meals </h1>
+
+    <h1 xmlns="http://www.w3.org/1999/html"> List of Meals </h1>
       <body>
       {% if results %}
       {% for key, value in response_list.items() %}
+      <fieldset class="rating">
+        <input type="checkbox" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+      </fieldset>
       <form method="POST" action="/recipe/details">
           <h3>
               <input type="submit" name="recipe" value="{{key}}">
